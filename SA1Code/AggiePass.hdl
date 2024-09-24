@@ -1,0 +1,57 @@
+// Tiernan Lindauer 134003853
+
+/**
+  - The chip accepts a 3-digit code as input along with the name of the person who is trying to enter the house.
+  - Each family member has a unique 3-digit code:
+    - Son: a=0, b=1, c=1  
+    - Mom: a=1, b=0, c=0 
+    - Dad: a=1, b=1, c=0
+  - Each family member also has a unique identity code (MSB i[1] is the first bit, LSB i[0] is the second bit):
+    - Son = 00
+    - Mom = 01
+    - Dad = 10
+    - 11 is an illegal state and will not be tested
+  - If the code and the selected person are incorrect, the chip will not unlock the door. 
+  - If the code is correct, but the selected person is incorrect, the chip will not unlock the door.
+  - If the code is correct and the selected person is correct, the chip will unlock the door.
+
+  - Check the AggiePass.cmp file for the correct outputs
+  - Check the Faulty.cmp file for the current faulty outputs
+**/
+
+
+/**
+Bug 1:
+- What is it and how you found it? (1 - 2 sentences):
+Extra And5Way that should not be used on line 47. Code 11 is an illegal state! This means getting rid of the extra Or.
+Bug 2:
+- What is it and how you found it? (1 - 2 sentences):
+The Mom's code is a, notB, notC (1, 0, 0) but the original implementation on line 46 was (0, 1, 0) or notA b notC which is incorrect.
+**/
+
+CHIP AggiePass {
+  IN a, b, c, i[2];
+  OUT unlock;
+
+  PARTS:
+  // Inverted inputs for convenience
+  Not(in=a, out=notA);
+  Not(in=b, out=notB);
+  Not(in=c, out=notC);
+  Not(in=i[0], out=notI0);
+  Not(in=i[1], out=notI1);
+
+  // Implementation, there are two bugs here. Feel free to modify, delete, add HDL codes as necessary.
+  // And5Way(a=notA, b=b, c=c,d=notI0, e=notI1, out=and1);
+  // And5Way(a=notA, b=b, c=notC,d=notI1, e=i[0], out=and2);
+  // And5Way(a=a, b=notB, c=c, d=notI1, e=notI0, out=and3);
+  // And5Way(a=a, b=b, c=notC, d=i[1], e=notI0, out=and4);
+  // Or3Way(a=and1, b=and2, c=and3, out=or1);
+  // Or(a=or1, b=and4, out=unlock);
+
+  And5Way(a=notA, b=b, c=c, d=notI0, e=notI1, out=and1);
+  And5Way(a=a, b=notB, c=notC, d=notI1, e=i[0], out=and2);
+  And5Way(a=a, b=b, c=notC, d=i[1], e=notI0, out=and3);
+
+  Or3Way(a=and1, b=and2, c=and3, out=unlock);
+}

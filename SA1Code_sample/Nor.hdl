@@ -1,0 +1,13 @@
+//this Nor gate is included in case you want to use it when building either chip
+//And, Or, Not, Nand are not included because they are built-in in nand2tetris (so you can use them always)
+
+CHIP Nor {
+    IN a, b;
+    OUT out;
+	
+    PARTS:
+	Nand(a=a,b=a,out=NotA);
+	Nand(a=b,b=b,out=NotB);
+	Nand(a=NotA,b=NotB,out=outAorB);
+	Nand(a=outAorB,b=outAorB,out=out);
+}

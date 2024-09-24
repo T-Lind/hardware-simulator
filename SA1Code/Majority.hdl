@@ -1,0 +1,22 @@
+// Tiernan Lindauer 134003853
+
+/**
+ * 3-input Majority Function: 
+ * out = 1 if 1 is the majority bit in the input, 0 otherwise. 
+ * for example, if the input is a=1, b=0, c=1 then out = 1
+ * for example, if the input is a=1, b=0, c=0 then out = 0
+ */
+
+CHIP Majority {
+    
+    IN a, b, c;
+    OUT out;
+	
+    PARTS:
+    And(a=a, b=b, out=ab);
+    And(a=b, b=c, out=bc);
+    And(a=a, b=c, out=ac);
+
+    Or(a=ab, b=bc, out=abbc);
+    Or(a=abbc, b=ac, out=out);
+}

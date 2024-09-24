@@ -1,0 +1,15 @@
+// Tiernan Lindauer 134003853
+
+/**
+    Helper chip
+    Adds two 3-bit numbers and returns result as 4 bit number
+*/
+CHIP Add2x3 {
+    IN a[3], b[3];
+    OUT sum[4];
+
+    PARTS:
+    HalfAdder(a=a[0], b=b[0], sum=sum[0], carry=carry1);
+    FullAdder(a=a[1], b=b[1], c=carry1, sum=sum[1], carry=carry2);
+    FullAdder(a=a[2], b=b[2], c=carry2, sum=sum[2], carry=sum[3]);
+}

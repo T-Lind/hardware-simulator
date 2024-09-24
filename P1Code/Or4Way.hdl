@@ -1,0 +1,16 @@
+// Tiernan Lindauer 134003853
+
+/**
+ * 4-way Or: 
+ * out = (in[0] or in[1] or ... or in[3])
+ */
+
+CHIP Or4Way {
+    IN a, b, c, d;
+    OUT out;
+
+    PARTS:
+    Or(a=a, b=b, out=or1);
+    Or(a=c, b=d, out=or2);
+    Or(a=or1, b=or2, out=out);
+}

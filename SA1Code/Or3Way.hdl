@@ -1,0 +1,9 @@
+// Given 3-way OR gate. DO NOT MODIFY THIS FILE.
+CHIP Or3Way {
+  IN a, b, c;
+  OUT out;
+
+  PARTS:
+  Or(a=a, b=b, out=orab);
+  Or(a=orab, b=c, out=out);
+}

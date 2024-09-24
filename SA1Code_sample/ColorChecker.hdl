@@ -1,0 +1,25 @@
+//Name: Tiernan Lindauer
+//UIN: 134003853
+
+/**
+ * SA1 (sample) problem A: ColorChecker.hdl
+ */
+
+CHIP ColorChecker {
+    
+    IN S, L, R;
+    OUT KEEP;
+	
+    PARTS:
+    Not(in=S, out=notS);
+    Not(in=L, out=notL);
+    Not(in=R, out=notR);
+
+    Or(a=L, b=R, out=orLR);
+    And(a=notS, b=orLR, out=left);
+
+    And(a=notL, b=notR, out=nandLR);
+    And(a=nandLR, b=S, out=right);
+
+    Or(a=left, b=right, out=KEEP);
+}

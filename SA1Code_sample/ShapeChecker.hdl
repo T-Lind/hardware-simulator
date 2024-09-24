@@ -1,0 +1,25 @@
+//Name:
+//UIN:
+
+/**
+ * SA1 (sample) problem B: ShapeChecker.hdl
+ */
+
+ CHIP ShapeChecker {
+    IN L, R;
+    OUT KEEP;
+
+    PARTS:
+    // NOT gates to invert inputs
+    Not(in=L, out=notL);
+    Not(in=R, out=notR);
+
+    // Case 1: L=0 and R=0 (circle-circle)
+    And(a=notL, b=notR, out=circleCircle);
+
+    // Case 2: L=1 and R=1 (square-square)
+    And(a=L, b=R, out=squareSquare);
+
+    // Final output: circle-circle OR square-square
+    Or(a=circleCircle, b=squareSquare, out=KEEP);
+}

@@ -1,0 +1,11 @@
+// Given 5-way AND gate. DO NOT MODIFY THIS FILE.
+CHIP And5Way {
+  IN a, b, c, d, e;
+  OUT out;
+
+  PARTS:
+  And(a=a, b=b, out=and1);
+  And(a=c, b=d, out=and2);
+  And(a=and1, b=and2, out=and3);
+  And(a=and3, b=e, out=out);
+}

@@ -1,0 +1,18 @@
+//Name: Tiernan Lindauer
+//UIN: 134003853
+
+/**
+ * Negate a 10-bit number in 2's complement format.
+ * 2’s complement of the input 
+ * carry out is intentionally ignored.
+ * Input in is in 2s complement format
+ */
+
+CHIP Negation10 {
+    IN in[10];
+    OUT out[10];
+
+    PARTS:
+    Not10(in=in, out=notIn);
+    Inc10(in=notIn, out=out);
+}

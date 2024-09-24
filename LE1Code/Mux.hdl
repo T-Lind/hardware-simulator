@@ -1,0 +1,18 @@
+// Tiernan Lindauer 134003853
+
+/** 
+ * Multiplexor:
+ * out = a if sel == 0
+ *       b otherwise
+ */
+
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    Not(in=sel, out=selNot);
+    And(a=a, b=selNot, out=aAnd);
+    And(a=b, b=sel, out=bAnd);
+    Or(a=aAnd, b=bAnd, out=out);
+}

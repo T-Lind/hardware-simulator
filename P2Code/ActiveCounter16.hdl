@@ -1,0 +1,32 @@
+// Tiernan Lindauer 134003853
+
+/**
+ * Counts the number of active(1) bits in a 16-bit input and outputs the result as a 5-bit
+ */
+
+ CHIP ActiveCounter16 {
+    IN in[16];
+    OUT out[5];
+
+    PARTS:
+    // First:pair up 2 sets of 8 bits and add each set
+    HalfAdder(a=in[0], b=in[1], sum=o10, carry=o11);
+    HalfAdder(a=in[2], b=in[3], sum=o20, carry=o21);
+    HalfAdder(a=in[4], b=in[5], sum=o30, carry=o31);
+    HalfAdder(a=in[6], b=in[7], sum=o40, carry=o41);
+    HalfAdder(a=in[8], b=in[9], sum=o50, carry=o51);
+    HalfAdder(a=in[10], b=in[11], sum=o60, carry=o61);
+    HalfAdder(a=in[12], b=in[13], sum=o70, carry=o71);
+    HalfAdder(a=in[14], b=in[15], sum=o80, carry=o81);
+    
+    Add2x2(a[0]=o10, a[1]=o11, b[0]=o20, b[1]=o21, sum=oa);
+    Add2x2(a[0]=o30, a[1]=o31, b[0]=o40, b[1]=o41, sum=ob);
+    Add2x2(a[0]=o50, a[1]=o51, b[0]=o60, b[1]=o61, sum=oc);
+    Add2x2(a[0]=o70, a[1]=o71, b[0]=o80, b[1]=o81, sum=od);
+
+    Add2x3(a=oa, b=ob, sum=oe);
+    Add2x3(a=oc, b=od, sum=of);
+
+    Add2x4(a=oe, b=of, sum=out);
+    
+    }

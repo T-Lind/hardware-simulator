@@ -1,0 +1,11 @@
+// Faulty results produced by the current iteration of the AggiePass chip.
+// For reference only, DO NOT USE THIS FILE FOR COMPARISON.
+|   a   |   b   |   c   |   i   | unlock |
+|   0   |   1   |   1   |  00   |   1    |
+|   1   |   0   |   0   |  01   |   0    |
+|   1   |   1   |   0   |  10   |   1    |
+|   0   |   0   |   0   |  10   |   0    |
+|   0   |   1   |   0   |  01   |   1    |
+|   1   |   0   |   1   |  00   |   1    |
+|   1   |   1   |   0   |  01   |   0    |
+|   1   |   1   |   1   |  10   |   0    |

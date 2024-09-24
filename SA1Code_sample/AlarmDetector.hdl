@@ -1,0 +1,10 @@
+CHIP AlarmDetector {
+    IN M, K, D;
+    OUT out;
+
+    PARTS:
+    Not(in=K, out=notK);
+    And(a=M, b=notK, out=o1);
+    And(a=notK, b=D, out=o2);
+    Or(a=o1, b=o2, out=out);
+}

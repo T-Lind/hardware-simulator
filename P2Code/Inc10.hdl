@@ -1,0 +1,17 @@
+//Name: Tiernan Lindauer
+//UIN: 134003853
+
+/**
+ * 16-bit incrementer:
+ * out = in + 1 (arithmetic addition)
+ * in is UNSIGNED
+ * carry output is intentionally ignored
+ */
+
+CHIP Inc10 {
+    IN in[10];
+    OUT out[10];
+
+    PARTS:
+    Add10(a=in, b[0]=true, out=out);
+}
