@@ -11,6 +11,7 @@ CHIP And {
     OUT out;
 
     PARTS:
-    Nor(a=a, b=b, out=notAnd);
-    Nor(a=notAnd, b=notAnd, out=out);
+    Not(in=a, out=notA);
+    Not(in=b, out=notB);
+    Nor(a=notA, b=notB, out=out);
 }

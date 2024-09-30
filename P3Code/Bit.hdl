@@ -1,0 +1,10 @@
+// Tiernan Lindauer 134003843
+
+CHIP Bit {
+    IN in, load;
+    OUT out;
+
+    PARTS:
+    Mux(a=dffo, b=in, out=muxo, sel=load);
+    DFF(in=muxo, out=out, out=dffo);
+}
