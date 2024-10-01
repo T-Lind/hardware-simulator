@@ -11,10 +11,10 @@
     OUT out[4];
     
     PARTS:
-    Counter4Bit(out=counter);
+    Counter4Bit(out[0]=c0, out[1]=c1, out[2]=c2, out[3]=c3);
 
-    FullAdder(a=in[0], b=counter[0], c=false, sum=out[0], carry=carry1);
-    FullAdder(a=in[1], b=counter[1], c=carry1, sum=out[1], carry=carry2);
-    FullAdder(a=in[2], b=counter[2], c=carry2, sum=out[2], carry=carry3);
-    FullAdder(a=in[3], b=counter[3], c=carry3, sum=out[3], carry=ignore);
+    FullAdder(a=in[0], b=c0, c=false, sum=out[0], carry=carry1);
+    FullAdder(a=in[1], b=c1, c=carry1, sum=out[1], carry=carry2);
+    FullAdder(a=in[2], b=c2, c=carry2, sum=out[2], carry=carry3);
+    FullAdder(a=in[3], b=c3, c=carry3, sum=out[3], carry=ignore);
 }
