@@ -1,18 +1,18 @@
 // Tiernan Lindauer 134003853
 
 /**
- * Exclusive-or gate:
- * out = not (a == b)
+ * Exclusive-Nor gate:
+ * out = (a == b)
  */
 
-CHIP Xor {
+ CHIP Xnor {
     IN a, b;
     OUT out;
 
     PARTS:
     Not(in=a, out=notA);
     Not(in=b, out=notB);
-    And(a=notA, b=b, out=and1);
-    And(a=a, b=notB, out=and2);
+    And(a=notA, b=notB, out=and1);
+    And(a=a, b=b, out=and2);
     Or(a=and1, b=and2, out=out);
 }
