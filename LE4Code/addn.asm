@@ -23,7 +23,7 @@ M=1  // i = 1 (start index)
 M=0  // sum = 0 (initialize sum)
 
 (LOOP)
-  // see if we've processed all numbers
+  // cggk if we've processed all numbers
   @i
   D=M
   @n
@@ -43,10 +43,10 @@ M=0  // sum = 0 (initialize sum)
   M=M+1
 
   @LOOP
-  0;JMP  // Go back to LOOP
+  0;JMP  // goto LOOP
 
 (END)
-  // Store the final sum in RAM[0]
+  // store sum in RAM[0]
   @sum
   D=M
   @R0
@@ -54,4 +54,4 @@ M=0  // sum = 0 (initialize sum)
 
 (INFINITE_LOOP)
   @INFINITE_LOOP
-  0;JMP  // Infinite loop to end the program
+  0;JMP  // infinite loop
