@@ -1,0 +1,16 @@
+//Total.hdl
+
+//NAME: Tiernan Lindauer
+//UIN: 134003853
+
+///////////////////////////////////////////////////////////////////////////////
+
+CHIP Total {
+    IN in[16], reset;
+    OUT out[16];
+
+    PARTS:
+    DFF16(in=forDff, out=out, out=currentVal);
+    Add16(a=in, b=currentVal, out=addOut);
+    Mux16(a=addOut, b=false, sel=reset, out=forDff);
+}
