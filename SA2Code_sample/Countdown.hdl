@@ -1,0 +1,25 @@
+// Take a 16-bit input and count down to 0
+// Once the counter reaches 0, the chip can take a new input
+// Check testbench for example input/output
+
+/*
+Pseudocode:
+while (true)
+    if (n = 0)
+        n = in
+    while (n > 0)
+        n--
+*/
+
+
+CHIP Countdown {
+    IN in[16];      // 16-bit input
+    OUT out[16];    // 16-bit output
+    
+    PARTS:
+    DFF16(in=muxOut, out=out, out=diffOut);
+    Or16Way(in=diffOut, out=orOut);
+    Dec16(in=diffOut, out=decOut);
+    Mux16(a=in, b=decOut, sel=orOut, out=muxOut);
+
+}

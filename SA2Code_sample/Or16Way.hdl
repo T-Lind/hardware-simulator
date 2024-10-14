@@ -1,0 +1,30 @@
+/*
+GIVEN, NO MODIFICATION NEEDED
+Decreases the input by 1.
+*/
+
+CHIP Or16Way {
+    IN in[16];
+    OUT out;
+
+    PARTS:
+    //
+    Or(a=in[0], b=in[1], out=l0g0);
+    Or(a=in[2], b=in[3], out=l0g1);
+    Or(a=in[4], b=in[5], out=l0g2);
+    Or(a=in[6], b=in[7], out=l0g3);
+    Or(a=in[8], b=in[9], out=l0g4);
+    Or(a=in[10], b=in[11], out=l0g5);
+    Or(a=in[12], b=in[13], out=l0g6);
+    Or(a=in[14], b=in[15], out=l0g7);
+    //
+    Or(a=l0g0, b=l0g1, out=l1g0);
+    Or(a=l0g2, b=l0g3, out=l1g1);
+    Or(a=l0g4, b=l0g5, out=l1g2);
+    Or(a=l0g6, b=l0g7, out=l1g3);
+    //
+    Or(a=l1g0, b=l1g1, out=l2g0);
+    Or(a=l1g2, b=l1g3, out=l2g1);
+    //
+    Or(a=l2g0, b=l2g1, out=out);
+}
