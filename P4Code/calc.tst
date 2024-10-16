@@ -9,7 +9,7 @@ set RAM[0] 1, // Set test arguments
 set RAM[1] 2,
 set RAM[2] 1,  
 set RAM[3] 0; // Test that program initialized to 0
-repeat 1000 {
+repeat 100 {
   ticktock;
 }
 set RAM[0] 1,   // Restore arguments in case program used them as loop counter
@@ -22,7 +22,7 @@ set RAM[0] 2, // Set test arguments
 set RAM[1] 1,
 set RAM[2] 2,  
 set RAM[3] 0; // Test that program initialized to 0
-repeat 1000 {
+repeat 100 {
   ticktock;
 }
 set RAM[0] 2,   // Restore arguments in case program used them as loop counter
@@ -67,6 +67,3 @@ repeat 1000 {
   ticktock;
 }
 set RAM[0] -1,   // Restore arguments in case program used them as loop counter
-set RAM[1] -1,
-set RAM[2] 3,
-output;

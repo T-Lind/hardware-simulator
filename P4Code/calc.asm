@@ -17,17 +17,21 @@
 
 
 // Put your code below this line
-@R3
+// File name: calc.asm
+
+@1024
 M=0
 
 @R2
 D=M
 
 @ADD
+D=D-1
 D;JEQ
 
 @SUB
 D=D-1
+D;JEQ
 
 @MUL
 D=D-1
@@ -37,99 +41,132 @@ D;JEQ
 D=D-1
 D;JEQ
 
-@END
+@ERROR
 0;JMP
 
 (ADD)
-@R0
-D=MUL
-@R1
-D=D+MUL
-@R3
-M=D
-@END
-0;JMP
+    @R0
+    D=M
+    @R1
+    D=D+M
+    @R3
+    M=D
+    @END
+    0;JMP
 
 (SUB)
-@R0
-D=M
-@R1
-D=D-M
-@R3
-M=D
-@END
-0;JMP
+    @R0
+    D=M
+    @R1
+    D=D-M
+    @R3
+    M=D
+    @END
+    0;JMP
 
 (MUL)
-@R0
-D=M
-@R3
-M=0
-@R1
-D=M
-@MULNEG
-D;JLT
-@MULPOS
-0;JMP
+    @R0
+    D=M
+    @MUL_CHECK_SECOND
+    D;JGE
+    @R1
+    D=M
+    @ERROR
+    D;JLT
 
-(MULNEG)
-@R0
-D=-MUL
-@R1
-D=-M
-@MULPOS
-0;JMP
+(MUL_CHECK_SECOND)
+    @R3
+    M=0
 
-(MULPOS)
-@R3
-M=M+D
-@R0
-D=M-1
-M=D
-@MULPOS
-D;JGE
-@END
-0;JMP
+    @R0
+    D=M
+    @R4
+    M=D
+    @MUL_ABS_A
+    D;JGE
+    @R4
+    M=-M
+(MUL_ABS_A)
+    @R1
+    D=M
+    @R5
+    M=D
+    @MUL_ABS_B
+    D;JGE
+    @R5
+    M=-M
+(MUL_ABS_B)
+
+(MUL_LOOP)
+    @R5
+    D=M
+    @MUL_END
+    D;JEQ
+    @R4
+    D=M
+    @R3
+    M=M+D
+    @R5
+    M=M-1
+    @MUL_LOOP
+    0;JMP
+
+(MUL_END)
+    @R0
+    D=M
+    @R1
+    D=D|M
+    @MUL_DONE
+    D;JGE
+    @R3
+    M=-M
+
+(MUL_DONE)
+    @END
+    0;JMP
 
 (DIV)
-@R0
-D=M
-@DIVERR
-D;JLE
-@R1
-D=M
-@DIVERR
-D;JLE
+    @R0
+    D=M
+    @ERROR
+    D;JLE
+    @R1
+    D=M
+    @ERROR
+    D;JLE
 
-@R0
-D=M
-@R3
-M=0
-@R4
-M=D
-(DIVLOOP)
-@R1
-D=MUL
-@R4
-D=M-DIV
-@DIVEND
-D;JLT
-M=D
-@R3
-M=M+1
+    @R3
+    M=0
+    @R4
+    M=0
 
-@DIVLOOP
-0;JMP
-(DIVEND)
-@END
-0;JMP
+    @R0
+    D=M
+    @R4
+    M=D
+(DIV_LOOP)
+    @R4
+    D=M
+    @R1
+    D=D-M
+    @DIV_END
+    D;JLT
 
-(DIVERR)
-@R3
-M=-1
-@R4
-M=-1
+    @R4
+    M=D
+    @R3
+    M=M+1
+    @DIV_LOOP
+    0;JMP
+
+(DIV_END)
+    @END
+    0;JMP
+
+(ERROR)
+    @1024
+    M=-1
 
 (END)
-@END
-0;JMP
+    @END
+    0;JMP
