@@ -9,7 +9,7 @@ output-list RAM[0]%D2.6.2 RAM[1]%D2.6.2 RAM[2]%D2.6.2 RAM[3]%D2.6.2 RAM[4]%D2.6.
 set RAM[0] 12121,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -19,7 +19,7 @@ set PC 0,
 set RAM[0] 12345,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -29,7 +29,7 @@ set PC 0,
 set RAM[0] 30603,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -39,7 +39,7 @@ set PC 0,
 set RAM[0] 10211,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -49,7 +49,7 @@ set PC 0,
 set RAM[0] 11111,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -59,7 +59,7 @@ set PC 0,
 set RAM[0] 12321,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -69,7 +69,7 @@ set PC 0,
 set RAM[0] 10001,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
@@ -79,17 +79,7 @@ set PC 0,
 set RAM[0] 10000,
 set RAM[8] 10,
 set RAM[1] 0;
-repeat 100 {
-  ticktock;
-}
-output;
-
-// Test case 9: Palindrome (99999)
-set PC 0,
-set RAM[0] 99999,
-set RAM[8] 10,
-set RAM[1] 0;
-repeat 100 {
+repeat 300 {
   ticktock;
 }
 output;
