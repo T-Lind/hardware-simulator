@@ -9,7 +9,7 @@ output-list RAM[0]%D2.6.2 RAM[1]%D2.6.2 RAM[2]%D2.6.2;
 set RAM[0] 48,
 set RAM[1] 18,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -19,7 +19,7 @@ set PC 0,
 set RAM[0] 17,
 set RAM[1] 5,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -29,7 +29,7 @@ set PC 0,
 set RAM[0] 100,
 set RAM[1] 75,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -39,7 +39,7 @@ set PC 0,
 set RAM[0] 0,
 set RAM[1] 5,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -49,7 +49,7 @@ set PC 0,
 set RAM[0] 5,
 set RAM[1] 0,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -59,7 +59,7 @@ set PC 0,
 set RAM[0] 1,
 set RAM[1] 1,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -69,7 +69,7 @@ set PC 0,
 set RAM[0] 13,
 set RAM[1] 13,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
@@ -79,7 +79,7 @@ set PC 0,
 set RAM[0] 144,
 set RAM[1] 12,
 set RAM[2] 0;
-repeat 1000 {
+repeat 400 {
   ticktock;
 }
 output;
