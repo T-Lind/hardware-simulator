@@ -1,0 +1,62 @@
+// Name and UIN
+
+CHIP CPU{
+
+    IN  fromM[16],          // M value input  (M = contents of RAM[Address])
+        In[16],    	        // Instruction for execution
+        Reset;              // Signals whether to re-start the current
+                            // program (Reset==1) or continue executing
+                            // the current program (Reset==0).
+
+    OUT toM[16],            // M value output
+        writeM,             // Write to M 
+        addressM[16],       // Address in data memory (of M)
+        PCOut[16];          // address of next instruction
+
+    PARTS:
+    // Instruction bits along with the inverted versions
+
+
+    // 1. Register control //
+
+
+    // Register control //
+
+    
+    // 2. ALU  //
+
+
+
+    // ALU //
+
+
+
+    // 3. Prepare the Memory Address addressM (in case of READ and Write), Memory Data toM (in case of Write or OUT)
+    // addressM //
+    
+
+
+
+    // addressM //
+
+
+
+    // 4. Generate the writeM signal (memory write for RAM or Screen)
+    // writeM is true if it is a Memory Write operation or a Screen OUT operation
+    // writeM //
+   
+
+
+    // writeM //
+    
+
+    
+    // 5. We load the PC with new value if there is a branch
+    // Branch can be conditional or unconditional
+    // Unconditional => In[15..12] = 1011
+    // Conditional => In[15..12] = 1001 && In[8..6]==000
+    // PC //
+
+
+    // PC //
+} 

@@ -1,0 +1,30 @@
+// NAME and UIN
+
+
+CHIP Memory {
+	
+    IN  in[16],       // Data to be written into memory
+        load,      	  // Variable which decides whether to write to memory or not
+        address[16];  // Address for the register which we want access
+    
+    OUT out[16];      // Output from the memory
+
+    PARTS:
+    // Add your code here
+    // Data Memory has three sections: 32K RAM, 8K Screen, 1 Keyboard. Unit is 1 word (16 bits)
+
+    // Address RAM (32K) with 15 address bits [0..14]
+
+
+
+    // Address SCREEN(8K) with address[0..12] will be used to map the address to the screen
+
+
+
+    // Address KEYBOARD(1) 
+
+
+
+    // Combine all of them in a mux (Hint: Mux8Way16)
+
+}
