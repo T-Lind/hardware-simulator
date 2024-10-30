@@ -1,62 +1,90 @@
-// Name and UIN
-
-CHIP CPU{
-
-    IN  fromM[16],          // M value input  (M = contents of RAM[Address])
-        In[16],    	        // Instruction for execution
-        Reset;              // Signals whether to re-start the current
-                            // program (Reset==1) or continue executing
-                            // the current program (Reset==0).
-
-    OUT toM[16],            // M value output
-        writeM,             // Write to M 
-        addressM[16],       // Address in data memory (of M)
-        PCOut[16];          // address of next instruction
+ CHIP CPU {
+    IN  fromM[16],         // M value input (M = contents of RAM[Address])
+        In[16],            // Instruction for execution
+        Reset;             // Signals whether to re-start the current program
+    OUT toM[16],           // M value output
+        writeM,            // Write to M 
+        addressM[16],      // Address in data memory (of M)
+        PCOut[16];         // address of next instruction
 
     PARTS:
-    // Instruction bits along with the inverted versions
+    // 1. Register File Control and Implementation
+    // Extract register addresses from instruction
+    DMux8Way(in=true, sel=In[9..11], 
+        a=selR0, b=selR1, c=selR2, d=selR3, 
+        e=selR4, f=selR5, g=selR6, h=selR7);
 
+    // Register load control based on instruction type
+    And(a=In[15], b=In[14], out=isIO);
+    And(a=In[13], b=In[12], out=isWrite);
+    Not(in=isWrite, out=notWrite);
+    And(a=notWrite, b=true, out=loadReg);
 
-    // 1. Register control //
+    // 8 16-bit registers
+    Register(in=ALUOut, load=selR0, out=R0);
+    Register(in=ALUOut, load=selR1, out=R1);
+    Register(in=ALUOut, load=selR2, out=R2);
+    Register(in=ALUOut, load=selR3, out=R3);
+    Register(in=ALUOut, load=selR4, out=R4);
+    Register(in=ALUOut, load=selR5, out=R5);
+    Register(in=ALUOut, load=selR6, out=R6);
+    Register(in=ALUOut, load=selR7, out=R7);
 
+    // Source register multiplexers
+    Mux8Way16(
+        a=R0, b=R1, c=R2, d=R3, 
+        e=R4, f=R5, g=R6, h=R7,
+        sel=In[8..6], out=srcReg1);
 
-    // Register control //
+    Mux8Way16(
+        a=R0, b=R1, c=R2, d=R3,
+        e=R4, f=R5, g=R6, h=R7,
+        sel=In[5..3], out=srcReg2);
 
-    
-    // 2. ALU  //
+    // 2. ALU Control and Operation
+    // Determine operation type
+    And(a=In[15], b=In[14], out=isIOOp);
+    And(a=In[15], b=notIn14, out=isBranchOrMem);
+    And(a=notIn15, b=In[14], out=isLogical);
+    And(a=notIn15, b=notIn14, out=isArith);
 
+    // ALU operation control
+    Mux4Way16(
+        a[0..3]=addOp,    // Arithmetic
+        b[0..3]=logicOp,  // Logical
+        c[0..3]=memOp,    // Memory
+        d[0..3]=ioOp,     // I/O
+        sel=In[15..14], 
+        out[0..3]=aluOp);
 
+    // ALU instantiation
+    ALU(x=srcReg1, y=srcReg2, AluOp=aluOp, AluOut=ALUOut);
 
-    // ALU //
+    // 3. Memory Address and Data Control
+    // Address for memory operations
+    Mux16(a=srcReg1, b=ALUOut, sel=isMemWrite, out=addressM);
 
+    // Data for memory write
+    Mux16(a=srcReg2, b=ALUOut, sel=isIOOp, out=toM);
 
+    // 4. Memory Write Control
+    // Write enable for memory operations
+    Or(a=isMemWrite, b=isScreenOut, out=writeM);
 
-    // 3. Prepare the Memory Address addressM (in case of READ and Write), Memory Data toM (in case of Write or OUT)
-    // addressM //
-    
+    // 5. Program Counter Control
+    // Branch condition check
+    Eq16(a=srcReg2, b=false, out=isZero);
+    And(a=isBranchOp, b=isZero, out=doBranch);
+    Or(a=doBranch, b=isJump, out=loadPC);
 
+    // PC logic
+    PC(in=srcReg1, load=loadPC, inc=true, reset=Reset, out=PCOut);
 
-
-    // addressM //
-
-
-
-    // 4. Generate the writeM signal (memory write for RAM or Screen)
-    // writeM is true if it is a Memory Write operation or a Screen OUT operation
-    // writeM //
-   
-
-
-    // writeM //
-    
-
-    
-    // 5. We load the PC with new value if there is a branch
-    // Branch can be conditional or unconditional
-    // Unconditional => In[15..12] = 1011
-    // Conditional => In[15..12] = 1001 && In[8..6]==000
-    // PC //
-
-
-    // PC //
-} 
+    // Additional control logic
+    Not(in=In[15], out=notIn15);
+    Not(in=In[14], out=notIn14);
+    And(a=In[13], b=In[12], out=isMemWrite);
+    And(a=isIOOp, b=notIn13, out=isScreenOut);
+    And(a=isBranchOrMem, b=In[13], out=isBranchOp);
+    And(a=isBranchOp, b=In[12], out=isJump);
+}

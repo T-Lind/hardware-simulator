@@ -1,0 +1,23 @@
+// Tiernan Lindauer 134003853
+
+CHIP RegisterBank8 {
+    IN in[16],
+       load,
+       regSel[3];
+    OUT out0[16], out1[16], out2[16], out3[16],
+        out4[16], out5[16], out6[16], out7[16];
+
+    PARTS:
+    DMux8Way(in=load, sel=regSel,
+             a=load0, b=load1, c=load2, d=load3,
+             e=load4, f=load5, g=load6, h=load7);
+
+    Register(in=in, load=load0, out=out0);
+    Register(in=in, load=load1, out=out1);
+    Register(in=in, load=load2, out=out2);
+    Register(in=in, load=load3, out=out3);
+    Register(in=in, load=load4, out=out4);
+    Register(in=in, load=load5, out=out5);
+    Register(in=in, load=load6, out=out6);
+    Register(in=in, load=load7, out=out7);
+}

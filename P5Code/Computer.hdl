@@ -1,5 +1,4 @@
-// NAME AND UIN
-
+// Tiernan Lindauer 134003853
 
 CHIP Computer {
 	
@@ -9,7 +8,7 @@ CHIP Computer {
 
 	//ROM Start
 
-	//*******REPLACE THIS LINE WITH THE CODE TO INSTANTIATE ROM32K*********//
+	ROM32K(address=PCOut, out=In);
 
 	//ROM End
 
