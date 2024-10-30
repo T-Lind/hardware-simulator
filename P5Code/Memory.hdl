@@ -11,7 +11,8 @@ CHIP Memory {
     PARTS:
     // Determine which section to access based on address[14..15]
     DMux4Way(in=load, sel=address[14..15], a=loadRAM, b=loadRAM2, c=loadScreen, d=loadKbd);
-    
+
+
     // Combine RAM load signals since RAM uses addresses 0..32767 (both 00 and 01 in top bits)
     Or(a=loadRAM, b=loadRAM2, out=finalLoadRAM);
     
@@ -24,7 +25,6 @@ CHIP Memory {
     // Keyboard is read-only, no load or address needed
     Keyboard(out=kbdOut);
     
-    // Select the output based on address[14..15]
-    Mux4Way16(a=ramOut, b=ramOut, c=screenOut, d=kbdOut, 
-              sel=address[14..15], out=out);
+    Mux4Way16(a=ramOut, b=ramOut, c=screenOut, d=kbdOut,
+        sel=address[14..15], out=out);
 }
