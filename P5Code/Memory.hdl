@@ -1,4 +1,4 @@
-// NAME and UIN
+// Tiernan Lindauer 134003853
 
 
 CHIP Memory {
@@ -9,22 +9,19 @@ CHIP Memory {
     OUT out[16];      // Output from the memory
 
     PARTS:
-    // Determine which section to access based on address[14..15]
-    DMux4Way(in=load, sel=address[14..15], a=loadRAM, b=loadRAM2, c=loadScreen, d=loadKbd);
+        Not(in=address[15], out=a15Not);
+        And(a=a15Not, b=load, out=ramLoad);
+        
+        Not(in=address[14], out=a14Not);
+        Not(in=address[13], out=a13Not);
+        And(a=a13Not, b=a14Not, out=a1314);
+        And(a=address[15], b=a1314, out=scrLoad);
 
+        RAM32K(in=in, load=ramLoad, address=address[0..14], out=ramOut);
 
-    // Combine RAM load signals since RAM uses addresses 0..32767 (both 00 and 01 in top bits)
-    Or(a=loadRAM, b=loadRAM2, out=finalLoadRAM);
-    
-    // RAM32K takes 15 address bits [0..14]
-    RAM32K(in=in, load=finalLoadRAM, address=address[0..14], out=ramOut);
-    
-    // Screen takes 13 address bits [0..12]
-    Screen(in=in, load=loadScreen, address=address[0..12], out=screenOut);
-    
-    // Keyboard is read-only, no load or address needed
-    Keyboard(out=kbdOut);
-    
-    Mux4Way16(a=ramOut, b=ramOut, c=screenOut, d=kbdOut,
-        sel=address[14..15], out=out);
+        Screen(in=in, load=scrLoad, address=address[0..12], out=scrOut);
+
+        Keyboard(out=kbdOut);
+
+        Mux8Way16(a=ramOut, b=ramOut, c=ramOut, d=ramOut, e=scrOut, f=kbdOut, g=kbdOut, h=kbdOut, sel=address[13..15], out=out);
 }

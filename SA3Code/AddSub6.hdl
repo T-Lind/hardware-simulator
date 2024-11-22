@@ -1,0 +1,13 @@
+CHIP AddSub6 {
+
+    IN  a[6], b[6], sub;
+
+    OUT sum[6];
+
+    PARTS:
+        //possibly negate b
+        Negate6(in=b, out=negb);
+        Mux6(a=b, b=negb, sel=sub, out=finalb);
+        //add
+        Add6(a=a, b=finalb, sum=sum);
+} 

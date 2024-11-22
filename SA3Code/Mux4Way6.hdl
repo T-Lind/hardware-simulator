@@ -1,0 +1,11 @@
+CHIP Mux4Way6 {
+
+    IN  a[6], b[6], c[6], d[6], sel[2];
+
+    OUT out[6];
+
+    PARTS:
+        Mux6(a=a, b=b, sel=sel[0], out=ab);
+        Mux6(a=c, b=d, sel=sel[0], out=cd);
+        Mux6(a=ab, b=cd, sel=sel[1], out=out);
+} 

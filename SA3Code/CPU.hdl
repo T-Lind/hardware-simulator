@@ -1,0 +1,53 @@
+//Name: Tiernan Lindauer
+//UIN: 134003853
+
+/*
+The CPU start code below corresponds to the diagram in the SA3 document.
+The missing connections are labeled with question marks.
+You may need to add additional components to this chip,
+but you won't need to *create* any additional chips to solve the problem.
+Feel free to use any built-in or given chip.
+*/
+
+CHIP CPU {
+    IN  In[8], //instruction to execute
+        Reset; //reset signal for PC
+
+    OUT Out[6], //output of R0
+        PCout[6]; //output of PC
+
+    PARTS:
+
+        Not(in=In[7], out=nop7);
+        Not(in=In[6], out=nop6);
+        
+        //registers
+        Register6(in=inReg, load=loadR0, out=outR0, out=Out, out[5]=outR0pin5);
+        Register6(in=inReg, load=loadR1, out=outR1);
+        Register6(in=inReg, load=loadR2, out=outR2);
+        Register6(in=inReg, load=loadR3, out=outR3);
+
+        //register selection
+        Mux4Way6(a=outR0, b=outR1, c=outR2, d=outR3, sel=In[2..3], out=outSrc1);
+        Mux4Way6(a=outR0, b=outR1, c=outR2, d=outR3, sel=In[0..1], out=outSrc2);
+
+        //register computation/loading
+        AddSub6(a=outSrc1, b=outSrc2, sub=In[6], sum=outArithmetic);
+        Mux6(a=outArithmetic, b[0..5]=In[0..5], sel=In[7], out=inReg);
+
+        And(a=nop7, b=true, out=aop);
+        And(a=In[7], b=In[6], out=inp);
+        Or(a=aop, b=inp, out=wr);
+        
+        Mux(a=In[4], b=false, sel=inp, out=s0);
+        Mux(a=In[5], b=false, sel=inp, out=s1);
+        DMux4Way(in=wr, sel[0]=s0, sel[1]=s1,
+                a=loadR0, b=loadR1, c=loadR2, d=loadR3);
+
+        And(a=In[7], b=nop6, out=jcd);
+        Not(in=outR0pin5, out=pos);
+        And(a=jcd, b=pos, out=jmp);
+        
+        //program counter
+        PC6(in[0..5]=In[0..5], load=jmp, reset=Reset, inc=true, out=PCout);
+}

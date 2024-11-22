@@ -1,0 +1,13 @@
+CHIP PC6 {
+
+    IN  in[6], load, reset, inc;
+
+    OUT out[6];
+
+    PARTS:
+        Add6(a=outReg, b[0]=true, sum=outInc);
+        Mux6(a=outReg, b=outInc, sel=inc, out=outMuxInc);
+        Mux6(a=outMuxInc, b=in, sel=load, out=outMuxLoad);
+        Mux6(a=outMuxLoad, b=false, sel=reset, out=outMuxReset);
+        Register6(in=outMuxReset, load=true, out=outReg, out=out);
+}

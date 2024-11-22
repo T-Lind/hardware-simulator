@@ -1,0 +1,10 @@
+CHIP Negate6 {
+
+    IN  in[6];
+
+    OUT out[6];
+
+    PARTS:
+        Not6(in=in, out=notin); //flip bits
+        Add6(a=notin, b[0]=true, sum=out); //add 1
+} 

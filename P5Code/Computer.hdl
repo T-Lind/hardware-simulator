@@ -5,23 +5,21 @@ CHIP Computer {
 	IN Reset;
 
 	PARTS:
+		//ROM Start
 
-	//ROM Start
+		ROM32K(address=PCOut, out=In);
 
-	ROM32K(address=PCOut, out=In);
+		//ROM End
 
-	//ROM End
+		//CPU Start
 
-	//CPU Start
+		CPU(fromM=fromM, In=In, Reset=Reset, toM=toM, writeM=writeM, addressM=addressM, PCOut[0..14]=PCOut);
 
-	CPU(fromM=fromM, In=In, Reset=Reset, toM=toM, writeM=writeM, addressM=addressM, PCOut[0..14]=PCOut );
+		//CPU End
 
-	//CPU End
+		//Data Memory Start
 
-	//Data Memory Start
+		Memory(in=toM, load=writeM, address=addressM, out=fromM);
 
-	Memory(in=toM, load=writeM, address=addressM, out=fromM );
-
-	//Data Memory End
-
+		//Data Memory End
 }
